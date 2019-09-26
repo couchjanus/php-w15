@@ -1,259 +1,243 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <?php
-        echo ("Hello World");
+<?php
     /**
-     * PHP version 7.2
+     * PHP version 7.3
      * 
-     * @category Php
-     * @package  Php_Project
-     * @author   Janus Nic <janusnic@gmail.com>
-     * @license  MIT License https://github.com/couchjanus/php7.2-fundamental/LICENSE
-     * @link     https://github.com/couchjanus/php7.2-fundamental
-     **/
-
-    // var_dump('PHP_INT_SIZE: ', PHP_INT_SIZE);
-    // var_dump('PHP_INT_MAX: ', PHP_INT_MAX);
-    // var_dump('PHP_INT_MIN: ', PHP_INT_MIN);
-
-    // Переполнение целых на 32-битных системах
-    // $large_number = 2147483647;
-    // var_dump($large_number);                     // int(2147483647)
-    // $large_number = 2147483648;
-    // var_dump($large_number);                     // float(2147483648)
-    // $million = 1000000;
-    // $large_number =  50000 * $million;
-    // var_dump($large_number);                     // float(50000000000)
-
-
-    // Для большего контроля над округлением используйте функцию round().
-
-    // var_dump(25/7);         // float(3.5714285714286)
-    // var_dump((int) (25/7)); // int(3)
-    // var_dump(round(25/7));  // float(4)
-
-    // Новая функция intdiv() производит целочисленное деление операндов и возвращает его результат.
-
-    // var_dump(intdiv(10, 3));
-
-    // echo intdiv(10, 3); //> 3
-    // echo intdiv(5, 2); //> 2
-
-
-    // Манипуляции с типами
-
-    // $foo = "1";  // $foo - это строка (ASCII-код 49)
-    // $foo *= 2;   // $foo теперь целое число (2)
-    // $foo = $foo * 1.3;  // $foo теперь число с плавающей точкой (2.6)
-    // $foo = 5 * "10 Little Piggies"; // $foo - это целое число (50)
-    // $foo = 5 * "10 Small Pigs";     // $foo - это целое число (50)
-
-    // $foo = "5bar"; // строка
-    // $bar = true;   // булевое значение
-
-    // Чтобы указать тип переменной непосредственно, используйте функцию settype().
-
-    // settype($foo, "integer"); // $foo теперь 5   (целое)
-
-    // Максимальное значение для "int" равно PHP_INT_MAX.
-    // echo PHP_INT_MAX;
-    // settype($bar, "string");  // $bar теперь "1" (строка)
-
-    // Приведение типов в PHP работает так же, как и в C: имя требуемого типа записывается в круглых скобках перед приводимой переменной.
-
-    // $foo = 10;   // $foo - это целое число
-    // $bar = (boolean) $foo;   // $bar - это булев тип
-
-    // Внутри скобок допускаются пробелы и символы табуляции, поэтому следующие примеры равносильны по своему действию:
-
-    // $foo = (int) $bar;
-    // $foo = ( int ) $bar;
+     * @category php
+     * @package  shopaholic
+     * @author   Couch Janus <couchjanus@gmail.com>
+     * @license  MIT License https://github.com/couchjanus/php-g14/LICENSE
+    */
     
-    // Приведение строковых литералов и переменных к бинарным строкам:
-    // $binary = (binary) $string;
-    // $binary = b"binary string";
+    // Примеры использования функции date()
+   
+    // выведет примерно следующее: Thursday
+    // echo date("l");
 
-    // Вместо использования приведения переменной к string, можно также заключить ее в двойные кавычки.
+    // выведет примерно следующее: Thursday 26th of September 2019 03:09:23 PM
+    // echo date('l jS \of F Y h:i:s A');
+
+    // выведет: July 1, 2020 is on a Wednesday
+    // echo "July 1, 2020 is on a " . date("l", mktime(0, 0, 0, 7, 1, 2020));
+
+    /* пример использования константы в качестве форматирующего параметра */
+    // выведет примерно следующее: Thu, 26 Sep 19 15:11:10 +0300
+    // echo date(DATE_RFC822);
+
+    // выведет примерно следующее: 2019-09-28T00:00:00+03:00
+    // echo date(DATE_ATOM, mktime(0, 0, 0, 9, 28, 2019));
+
+    // Чтобы запретить распознавание символа как форматирующего, следует экранировать его с помощью обратного слэша. Если экранированный символ также является форматирующей последовательностью, то следует экранировать его повторно.
+    // Экранирование символов в функции date()
+
+    // выведет примерно следующее: Thursday the 26th
+    // echo date('l \t\h\e jS');
+
+    // Для вывода прошедших и будущих дат удобно использовать функции date() и mktime().
+    // Пример совместного использования функций date() и mktime()
+
+    // $tomorrow  = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"));
+       
+    // имена локалей будут взяты из одноименных переменных окружения или переменной с именем "LANG".
+    // setlocale(LC_ALL, '');
+
+    // Установка ukraine локали
+    // setlocale(LC_ALL, 'uk_UA');
     
-    // $foo = 10;   // $foo - это целое число
-    // $bar = (boolean) $foo;   // $bar - это булев тип
-    // $foo = 10;            // $foo - это целое число
-    // $str = "$foo";        // $str - это строка
-    // $fst = (string) $foo; // $fst - это тоже строка
-    // // Это напечатает "они одинаковы"
-    // if ($fst === $str) {
-    //     echo "они одинаковы";
+    // echo date(DATE_ATOM, $tomorrow);
+    // $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"),   date("Y"));
+    // echo $lastmonth;
+    // $nextyear  = mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1);
+    // echo $nextyear;
+    
+    // установка временной зоны по умолчанию. Доступно с PHP 5.1
+    // date_default_timezone_set('UTC');
+    // Получение временной зоны по умолчанию
+
+    // echo "<h2>Get date default timezone</h2>";
+    // echo date_default_timezone_get();
+
+    // echo "<h2>Get date timezone from php.ini</h2>";
+
+    // if (ini_get('date.timezone')) {
+    //     echo 'date.timezone: ' . ini_get('date.timezone');
     // }
 
-    // $great = 'Hello';
-    // echo "{ $great} there";// Не работает, выводит: { Hello  there}
-    // echo "{$great}  there"; // Работает, выводит: Hello  there
+    // echo "<h2>Set date default timezone</h2>";
+    // date_default_timezone_set('Europe/Kiev');
 
-    // define("NUMB", 3.1456);
-
-    // define("CONSTANT", "Здравствуй, мир.");
-    // теперь можно объявить константу и так:
-    // const HELLO = 'Здравствуй, мир.';
-    // const PI = 3.14;
-    // echo HELLO;
-    // print NUMB;
-    // print PI;   
-    // define("MAXSIZE", 100);
-
-    // echo MAXSIZE;
-    // echo constant("MAXSIZE"); // результат аналогичен предыдущему выводу
-
-
-    // define('SHORTINIT', 'true');
-
-
-    // print_r(get_defined_constants());
-
-
-
-
-
-
-    // Простой массив
-    // $array = array(
-    //     "foo" => "bar",
-    //     "bar" => "foo",
-    // );
-    // var_dump($array);
-
-    // Начиная с PHP 5.4
-
-    // $array = [
-    //     "foo" => "bar",
-    //     "bar" => "foo",
-    // ];
-    // var_dump($array);
-    
-    // $array = array(
-    //     1    => "a",
-    //     "1"  => "b",
-    //     1.5  => "c",
-    //     true => "d",);
-    // var_dump($array);
-
-    // $array = array(
-    //     "foo" => "bar",
-    //     "bar" => "foo",
-    //     100   => -100,
-    //     -100  => 100,
-    // );
-    // var_dump($array);
-
-    // $array = array("foo", "bar", "hallo", "world");
-    // var_dump($array);
-
-    // $array = array(
-    //         "a",
-    //         "b",
-    // 6 => "c",
-    //         "d",
-    // );
-    // var_dump($array);
-
-    // Доступ к элементам массива с помощью квадратных скобок
-    // $array = array(
-    //     "foo" => "bar",
-    //     42    => 24,
-    //     "multi" => array(
-    //         "dimensional" => array(
-    //             "array" => "foo"
-    //         )
-    //     )
-    // );
-
-    // var_dump($array["foo"]);
-    // var_dump($array[42]);
-    // var_dump($array["multi"]["dimensional"]["array"]);
-
-    // $array = array(1, 2, 3, 4, 5);    // Создаем простой массив.
-    // print_r($array);
-    // Теперь удаляем каждый элемент, но сам массив оставляем нетронутым:
-    // foreach ($array as $i => $value) {
-    //     unset($array[$i]);
+    // if (date_default_timezone_get()) {
+    //     echo 'date_default_timezone_set: ' . date_default_timezone_get() . '<br />';
     // }
-    // print_r($array);
 
-    // Добавляем элемент (новым ключом будет 5, вместо 0).
-    // $array[] = 6;
-    // print_r($array);
-
-    // Переиндексация:
-    // $array = array_values($array);
-    // $array[] = 7;
-    // print_r($array);
-
-    // Оператор объединения с null 
-
-    // Оператор объединения с null (??), являющийся синтаксическим сахаром для действия, когда совместно используются тернарный оператор и функция isset(). Он возвращает первый операнд, если он задан и не равен NULL, а в обратном случае возвращает второй операнд.
+    // date_default_timezone_set('Europe/Kiev');
         
-    // $bNull = $aNull ?? 'сахар'; 
-    // echo $bNull;
+    // echo date("F");
+    // echo strftime("%A", date());
+    // echo strftime("%h-%d-%Y", strtotime("09/28/2019"));
+
+
+    // Выключение протоколирования ошибок
+    error_reporting(0);
+
+    // Включать в отчет простые описания ошибок
+    error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+    // Включать в отчет E_NOTICE сообщения (добавятся сообщения о
+    // непроинициализированных переменных или ошибках в именах переменных)
+    error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
+    // Добавлять сообщения обо всех ошибках, кроме E_NOTICE
+    error_reporting(E_ALL & ~E_NOTICE);
+
+    // Добавлять в отчет все ошибки PHP (см. список изменений)
+    error_reporting(E_ALL);
+
+    // Добавлять в отчет все ошибки PHP
+    error_reporting(-1);
+
+    // То же, что и error_reporting(E_ALL);
+    ini_set('error_reporting', E_ALL);
+
+    // Также можно запретить отображение ошибок для конкретной строки кода. Для этого используется символ «@». Пример:
     
-    // $cNull = $aNull ?? 'сахар';
-    // echo $cNull;
+    // $v = @$var[$n];
+
+    // echo '<h3>DIRECTORY_SEPARATOR (string)</h3>';
+    // echo DIRECTORY_SEPARATOR;
+    // echo '<h3>PATH_SEPARATOR (string)</h3>';
+    // echo PATH_SEPARATOR;
+    // echo '<h3>SCANDIR_SORT_ASCENDING (integer)</h3>';
+    // echo SCANDIR_SORT_ASCENDING;   
+    // echo '<h3>SCANDIR_SORT_DESCENDING (integer)</h3>';
+    // echo SCANDIR_SORT_DESCENDING;   
+    // echo '<h3>SCANDIR_SORT_NONE (integer)</h3>';
+    // echo SCANDIR_SORT_NONE;
+    
+    echo "<br>";
+    echo __DIR__;
+    echo "<br>";
+    echo realpath('');
+    echo "<br>";
+    echo $_SERVER['DOCUMENT_ROOT'];
+    echo "<br>";
+    echo __DIR__;
+    echo "<br>";
+    echo realpath(__DIR__);
+    echo "<br>";
+
+    $a = 1; /* глобальная область видимости */
+
+    function test()
+    {
+        echo $a; /* ссылка на переменную в локальной области видимости */
+    }
+
+    // Использование global
+    $a = 1;
+    $b = 2;
+
+    function Sum() {
+        global $a, $b;
+        $b = $a + $b;
+    } 
+    Sum();
+    echo $b;
+
+    // Использование $GLOBALS вместо global
+    // $a = 1;
+    // $b = 2;
+    // function Sum()
+    // {
+    //     $GLOBALS['b'] = $GLOBALS['a'] + $GLOBALS['b'];
+    // }
+    // Sum();
+    // echo $b;
+
+    // Суперглобальные переменные и область видимости
+    function test_superglobal()
+    {
+        echo $_POST['name'];
+    }
+            
+    $bar = "I'm Bar";
+
+    // function foo() 
+    // {
+    //     return $bar;
+    // }
+    // echo foo();
+    
+    function foo($bar) 
+    {
+        return $bar;
+    }
+    
+    echo foo($bar);
+
+    define('ROOT', dirname(__DIR__));
+    echo "<br>";
+    echo ROOT;
+    echo "<br>";
         
-    // Это идентично следующему коду:
-    
-    // $cNull = isset($aNull) ? $aNull : 'сахар';
-    // echo $cNull;
-    
-    // Оператор spaceship (космический корабль) 
+    function wiem() 
+    {
+        return APP;
+    }
 
-    // Оператор spaceship предназначен для сравнения двух выражений. Он возвращает -1, 0 или 1 если $a, соответственно, меньше, равно или больше чем $b. Сравнение производится в соответствии с правилами сравнения типов PHP.
+    function dd($mix)
+    {
+        echo '<pre>'.print_r($mix, true).'</pre>';
+    }
     
-    // Целые числа
-    // echo 1 <=> 1; // 0
-    // echo 1 <=> 2; // -1
-    // echo 2 <=> 1; // 1
+    const APP = ROOT.'/app';
+    dd(APP);
     
-    // Числа с плавающей точкой
-    // echo 1.5 <=> 1.5; // 0
-    // echo 1.5 <=> 2.5; // -1
-    // echo 2.5 <=> 1.5; // 1
+    dd(wiem());
     
-    // Строки
-    // echo "a" <=> "a"; // 0
-    // echo "a" <=> "b"; // -1
-    // echo "b" <=> "a"; // 1
-    
-    // Определение констант массивов с помощью define() 
+    if (function_exists('wiem')) {
+        dd(Wiem());
+    }
 
-    // Можно определить константу типа array с помощью функции define(). В PHP 5.6 такие константы можно было задавать только с помощью const.
-    
-    // define('ANIMALS', [
-    //     'dog',
-    //     'cat',
-    //     'bird'
-    // ]);
-    
-    // echo ANIMALS[1]; // выводит "cat"
-    
+    function getURI0(){
+        return $_SERVER['REQUEST_URI'];
+    }
+        
+    // Пример использования isset()
+    $var = '';
+    // Проверка вернет TRUE, поэтому текст будет напечатан.
+    if (isset($var)) {
+      echo "Эта переменная определена, поэтому ее и напечатали.";
+    }
 
-    // Синтаксис кодирования Unicode 
+    function getURI1(){
+        if (isset($_SERVER['REQUEST_URI']))
+            return $_SERVER['REQUEST_URI'];
+    }
 
-    // Он принимает шестнадцатеричный код Unicode и записываем его в формате UTF-8 в двойных кавычках или формате heredoc. Любой корректный код будет принят. Ведущие нули по желанию.
-    // echo "\u{aa}";
-    // echo "\u{0000aa}";
-    // echo "\u{9999}";
-    
-    // Результат выполнения данного примера:
-    
-    // ª
-    // ª (То же самое, что и первый вариант, но с ведущими нулями)
-    // 香
-    
-    ?>
-    </body>
-</html>
+    function getURI2(){
+        if (isset($_SERVER['REQUEST_URI']) and !empty($_SERVER['REQUEST_URI']))
+            return $_SERVER['REQUEST_URI'];
+    }
+
+    function getURI4()
+    {
+        return trim($_SERVER['REQUEST_URI'], '/');
+    }
+
+    function getURI5()
+    {
+        if (isset($_SERVER['REQUEST_URI']) and !empty($_SERVER['REQUEST_URI']))
+            return trim($_SERVER['REQUEST_URI'], '/');
+    }
+
+    function getURI6()
+    {
+        if (isset($_SERVER['REQUEST_URI']) and !empty($_SERVER['REQUEST_URI']))
+            return trim($_SERVER['REQUEST_URI'], '/');
+    }
+
+    //получаем строку запроса
+    // $uri = getURI();
+    // dd($uri);
+
+    // require_once dirname(__DIR__).'/bootstrap/bootstrap.php';
