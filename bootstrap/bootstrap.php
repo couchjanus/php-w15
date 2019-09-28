@@ -30,22 +30,12 @@ function getURI()
     if (isset($_SERVER['REQUEST_URI']) and !empty($_SERVER['REQUEST_URI']))
         return trim($_SERVER['REQUEST_URI'], '/');
 }
+function conf($mix)
+{
+	return include(CONFIG."/".$mix.".php"); 
+}
 
 // ============================================
 
 require_once dirname(__DIR__).'/config/app.php';
-
-// dd(CONTROLLERS);
-
-// view('home/index', array(
-// 	'title' => 'Home Page'
-// ));
-
-// view('blog/index', array(
-// 	'title' => 'Peculiar Blog'
-// ));
-
-// $title = 'Home Page';
-// view('home/index', compact('title'));
-
-// require_once CORE.'/Router.php';
+require_once CORE.'/Router.php';
