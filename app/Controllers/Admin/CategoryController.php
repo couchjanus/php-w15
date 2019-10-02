@@ -73,4 +73,34 @@ class CategoryController
     
         view('admin/categories/index', compact('title', 'categories'), 'admin');
     }
+
+    public function create()
+    {
+        if (isset($_POST) and !empty($_POST)) {
+
+            // Устанавливает новое соединение с сервером MySQL 
+            $conn = new mysqli(HOST, DBUSER, DBPASSWORD, DATABASE);
+
+            if ($conn->connect_error) {
+                die('Ошибка подключения (' . $conn->connect_errno . ') ' . $conn->connect_error);
+            }
+
+            $name = $conn->real_escape_string($_POST['name']);
+
+            // выполняем операции с базой данных
+
+            if ($conn->query("INSERT INTO categories (name) VALUES ('$name')")) {
+                $affected_rows = sprintf("%d строк вставлено.\n", $conn->affected_rows);
+            }
+                
+            // закрываем подключение
+            $conn->close(); 
+            
+            header('Location: /admin/categories');
+
+            // Helper::redirect('/admin/categories');
+        }
+        $title = 'Add New Category';
+        view('admin/categories/create', compact('title'), 'admin');
+    }
 }
