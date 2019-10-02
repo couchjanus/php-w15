@@ -10,8 +10,8 @@
                 <div class="card-body">
                     <form action="" method="POST">
                         <div class="form-group">
-                            <label for="username">Name</label>
-                            <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter name" required>
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email address</label>
@@ -46,36 +46,17 @@
 
     </div>
     <div class="col">
-        <div class="card comment-wrapper">
+        <div class="card">
             <div class="card-header bg-primary text-white"><i class="fa fa-envelope"></i> Comments
             </div>
             <div class="card-body">
-            <?php
-            if (isset($comments)):
-                printf("<h2>There Are %d Comments In Guest Book</h2>", count($comments));   
-            ?>    
-                <ul class="media-list">
-                  <?php foreach ($comments as $row):?>
-
-                    <li class="media">
-                        <a href="#" class="pull-left">
-                            <img src="/assets/images/user.png" alt="" class="img-circle">
-                        </a>
-                        <div class="media-body">
-                            <span class="text-muted pull-right">
-                                <small class="text-muted"><?php echo $row["created_at"]?></small>
-                            </span>
-                            <strong class="text-success"><?php echo $row["username"]?></strong>
-                            <p>
-                            <?php echo $row["message"]?>
-                            </p>
-                        </div>
-                    </li>
-                  <?php endforeach;?>
-                </ul>
-            <?php else: echo "<h2>No comments yet.... </h2>";
-            endif;?>
+                <?php
+                echo "<pre>"; 
+                    print_r($comments);
+                echo "</pre>"; 
+                ?>
             </div>
         </div>
     </div>    
 </div>
+

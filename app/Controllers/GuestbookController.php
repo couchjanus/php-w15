@@ -1,202 +1,58 @@
 <?php
+require_once CONFIG.'/db.php';
+
 $title = 'Guest Book';
 $address = conf('contacts');
+$error = false;
 
-// view('guestbook/index', compact('title'));
+if (!empty($_POST)) {
+    if ( !$_POST['username'] or !$_POST['email'] or !$_POST['message']){
+        echo "<b>Please complete all the fields</b><br><br>";
+    } else {
+        // подключаемся к серверу
+        $conn = mysqli_connect(HOST, DBUSER, DBPASSWORD, DATABASE) 
+        or die("Ошибка " . mysqli_error($conn));
 
-// $address = conf('contacts');
-// view('guestbook/index05', array(
-//     'title' => 'Guest Book',
-//     'address' => $address,
-//     'result' => $result,
-//     'comments' => $comments,
-//     'error' => $error,
-// ));
+        // $username = mysqli_real_escape_string ($conn, $_POST['username']);
+        // $email = mysqli_real_escape_string ($conn, $_POST['email']);
 
-// view('guestbook/index', compact('title', 'address'));
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
+        $message = mysqli_real_escape_string ($conn, $_POST['message']);
 
-/** 
- * fopen
- * fclose
-*/
-
-// Преднамеренная ошибка при работе с файлами
-
-// $my_file = @file('non_existent_file') 
-//     or
-//     die("Ошибка при открытии файла: сообщение об ошибке");
-
-// =======================================================
-
-$comments = '';
-
-// ========================fgets===============================
-// Для построчного чтения используется функция fgets(), которая получает дескриптор файла и возвращает одну считанную строку.
-
-// $fd = @fopen(DB."/comments", 'r') or die("не удалось открыть файл");
-
-// while (!feof($fd)) {
-//     $comments .= fgets($fd);
-// }
-// fclose($fd);
-// var_dump($comments);
-
-// ====================file_get_contents===============================
-// Если нам надо прочитать файл полностью:
-
-// $comments = file_get_contents(DB."/comments");
-// var_dump($comments);
-
-// При этом нам не надо открывать явно файл, получать дескриптор, а затем закрывать файл.
-
-// ====================fread===============================
-// Также можно провести поблочное считывание, то есть считывать определенное количество байт из файла с помощью функции fread():
-
-// if (file_exists(DB."/comments")) {
-//     $fhandle =@fopen(DB."/comments", "rt");
-//     $comments = '';
-//     while (!feof($fhandle)) {
-//         $comments .= fread($fhandle, 4096);
-//     }
-//     fclose($fhandle);
-//     var_dump($comments);
-// } else {
-//     echo "Файл не существует";
-// }
-
-// =====================file==============================
-// Чтение файла полностью
-// count, implode, str_replace, htmlspecialchars
-
-// $file = file(DB."/comments");
-// $count = count($file);
-// $comments = str_replace("\n", "<br />\n", htmlspecialchars(implode("\n", $file)));
-
-// file, str_replace, htmlspecialchars, implode 
-
-// $comments = str_replace("\n", "<br />\n", htmlspecialchars(implode("\n", file(DB."/comments"))));
-// var_dump($comments);
+        // выполняем операции с базой данных
+        $sql = "INSERT INTO guestbook (username, email, message) VALUES ('$username', '$email', '$message')";
+        mysqli_query($conn, $sql) or die("Ошибка: " . mysqli_error($conn));
+        mysqli_close($conn);
+    }
+}
 
 // ===================================================
 
-// $username = null;  
-// $email = null;
-// $message =  null;  
-// $result = false;
-// $fields = [];
-// $error = null;
+$conn = mysqli_connect(HOST, DBUSER, DBPASSWORD, DATABASE) 
+        or die("Ошибка " . mysqli_error($conn));
 
-// if ($_POST) {
-//     // dd($_POST);
-//     // Пример использования filter_input()
-//     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-//     dd($username);
-//     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);    
-//     dd($email);
-//     exit();
-// }
+$comments = [];
+$sql = "SELECT * FROM guestbook";
+$result = mysqli_query($conn, $sql);
+$resCount = mysqli_num_rows($result);
 
-// if (!empty($_POST)) {
-//     if ( !$_POST['username'] or !$_POST['email'] or !$_POST['message']){
-//      echo "<b>Please Complete All The Fields!</b>";
-//      exit();
-//     } else{
-//        echo dd($_POST);
-//        exit();
-//    }
-// }
+while($row = mysqli_fetch_assoc($result)){
+    array_push($comments, $row);
+}
+// закрываем подключение
+mysqli_close($conn);
 
-// FILTER_VALIDATE_EMAIL
+$address = conf('contacts');
 
-// if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-//     echo $email.'<br>';
-//     var_dump(filter_var($email, FILTER_VALIDATE_EMAIL));
-// }else{
-//     var_dump(filter_var($email, FILTER_VALIDATE_EMAIL));   
-// } 
+view('guestbook/index', array(
+    'title' => $title,
+    'address' => $address,
+    'result' => $result,
+    'comments' => $comments,
+    'error' => $error,
+));
 
-// echo '<pre>';
-//     echo $username;
-//     echo $email;
-// echo '</pre>';
-
-
-
-// if (!empty($_POST)) {
-//     $username = $_POST['name'];  
-//     $email = $_POST['email'];  
-//     $message =  $_POST['message'];  
-
-//     if (!$username or !$email or !$message) {
-//         $error = "<h2>Please complete all the fields</h2>";
-//     } else {
-//         $result = true;
-//         array_push($fields, $username); 
-//         array_push($fields, $email); 
-//         array_push($fields, $message);
-//         var_dump($fields);
-//     }
-// }
-
-// =====================fwrite==============================
-// add comment to comments.csv
-
-// if (!empty($_POST)) {
-    
-//     if (!$_POST['name'] or !$_POST['email'] or !$_POST['message']) {
-//         $error = "<h2>please complete all the fields</h2>";
-//     } else {
-//         $result = true;
-//         $fields = [];
-
-//         $username = $_POST['name'];
-//         array_push($fields, $username); 
-//         $email = $_POST['email'];
-//         array_push($fields, $email); 
-        
-//         $message = $_POST['message'];
-//         array_push($fields, $message); 
-//         $appended_at = date("Y-m-d");
-//         array_push($fields, $appended_at); 
-
-//         // $appended_at =  date("Y/m/d");
-//         // $appended_at =  date("Y.m.d");
-//         // $appended_at =  date("Y-m-d");
-//         // $appended_at =  date("l");
-
-//         $handle = fopen(DB."/comments.csv", "a+");
-//         $string = $username.":".$email.":".$message.":".$appended_at."\r\n";
-
-//         // fwrite($handle, $string);
-
-//         // file_put_contents(DB."comments.csv", $string, FILE_APPEND);
-
-//         fputcsv($handle, $fields, ':');
-//         fclose($handle);
-//     }
-// }
-
-// =====================fgetcsv==============================
-// $comments = [];
-
-// $handle = fopen(DB."/comments.csv", "rt");
-
-// while (($row = fgetcsv($handle, 10000, ":")) !== false) { 
-//     array_push($comments, $row); 
-// } 
-// fclose($handle); 
-
-// view('guestbook/index01', array(
-//     'title' => 'Guest Book',
-// ));
-
-// $address = conf('contacts');
-// view('guestbook/index02', array(
-//     'title' => 'Guest Book',
-//     'address' => $address
-// ));
-
-
-// view('guestbook/index', compact('title', 'address'));
- 
+// view('guestbook/index', compact('title', 'address', 'result', 'comments', 'error'));

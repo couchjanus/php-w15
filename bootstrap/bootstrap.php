@@ -1,10 +1,7 @@
 <?php
-
 // Общие настройки
-
 // Устанавливаем временную зону по умолчанию
 date_default_timezone_set('Europe/Kiev');    
-
 // Ошибки и протоколирование
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -38,4 +35,5 @@ function conf($mix)
 // ============================================
 
 require_once dirname(__DIR__).'/config/app.php';
+
 require_once CORE.'/Router.php';
