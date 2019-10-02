@@ -1,11 +1,9 @@
 <?php
+
 require_once CONFIG.'/db.php';
 
-$title = 'Guest Book';
-$address = conf('contacts');
-$error = false;
-
 if (!empty($_POST)) {
+   
     if ( !$_POST['username'] or !$_POST['email'] or !$_POST['message']){
         echo "<b>Please complete all the fields</b><br><br>";
     } else {
@@ -34,25 +32,24 @@ if (!empty($_POST)) {
 $conn = mysqli_connect(HOST, DBUSER, DBPASSWORD, DATABASE) 
         or die("Ошибка " . mysqli_error($conn));
 
+
 $comments = [];
 $sql = "SELECT * FROM guestbook";
 $result = mysqli_query($conn, $sql);
 $resCount = mysqli_num_rows($result);
 
 while($row = mysqli_fetch_assoc($result)){
-    array_push($comments, $row);
-}
+        array_push($comments, $row);
+    }
 // закрываем подключение
 mysqli_close($conn);
 
-$address = conf('contacts');
 
-view('guestbook/index', array(
-    'title' => $title,
+$address = conf('contacts');
+view('guestbook/index01', array(
+    'title' => 'Guest Book',
     'address' => $address,
     'result' => $result,
     'comments' => $comments,
     'error' => $error,
 ));
-
-// view('guestbook/index', compact('title', 'address', 'result', 'comments', 'error'));
