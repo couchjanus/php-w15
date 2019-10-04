@@ -4,21 +4,23 @@
  * class.01.test
  */
 
-class MyClass
-{
+class User {
+
   // Class properties and methods go here
- 
+
 }
 
 // Если с директивой new используется строка (string), 
 // содержащая имя класса, то будет создан новый экземпляр этого класса. 
 
-
-$obj = new MyClass;
+$userOne = new User();
+var_dump($userOne);
 
 // Если имя находится в пространстве имен, 
 // то оно должно быть задано полностью.
 
-$obj = new \MyClass;
+$userTwo = new \User();
 
-var_dump($obj);
+// Возвращает имя класса, экземпляром которого является объект userTwo.
+echo 'the class of userTwo is: ' . get_class($userTwo);
+

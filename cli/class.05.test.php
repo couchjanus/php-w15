@@ -2,27 +2,35 @@
 /**
  * class.05.test
  */  
-class MyClass
-{
-  public $prop1 = "I'm a class property!";
- 
-  public function setProperty($newval)
-  {
-      $this->prop1 = $newval;
+
+class User {
+  // Class properties and methods go here
+  public $username = 'John Doo';
+  public $email = 'doo@my.cat';
+  protected $sex = "male"; // I'm a protected property
+  private $_age = 22; // I'm a private property
+
+  public function addFriend(){
+    return "$this->username just added a new friend";
   }
- 
-  public function getProperty()
+
+  public function setSex($newSex)
   {
-      return $this->prop1;
+    $this->sex = $newSex;
+  }
+  public function getSex()
+  {
+    return $this->sex;
   }
 }
- 
-$instance = new MyClass;
- 
-echo $instance->getProperty(); // Get the property value
- 
-$instance->setProperty("I'm a new property value!"); // Set a new one
- 
-echo $instance->getProperty(); // Read it out again to show the change
 
-// var_dump($instance);
+$userOne = new User();
+$userTwo = new User();
+
+// echo $userOne->username; // Output the property
+// echo $userOne->sex; // Output the property
+// echo $userOne->_age; // Output the property
+
+echo $userTwo->getSex(); // Get the property value
+$userTwo->setSex("fimale"); // Set a new one
+echo $userTwo->getSex(); // Read it out again to show the change

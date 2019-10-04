@@ -2,31 +2,57 @@
 /**
  * class.08.test
  */     
-class MyClass
-{
-  public $prop1 = "I'm a class property!";
- 
-  public function __construct()
-  {
-      echo 'The class "', __CLASS__, '" was initiated!<br />';
-  }
- 
-  public function setProperty($newval)
-  {
-      $this->prop1 = $newval;
-  }
- 
-  public function getProperty()
-  {
-      return $this->prop1 . "<br />";
-  }
+
+class User {
+
+    private $username;
+    public $name;
+    public $email;
+
+    static public $status = 0;
+
+    public function setName($first_name, $last_name)
+    {
+        $this->username = $first_name.' '.$last_name;
+    }
+   
+    public function getName()
+    {
+        return $this->username;
+    }
+
+    public function __construct($name, $email){
+        echo 'The class "', __CLASS__, '" was initiated!<br />';
+
+        $this->name = $name;
+        $this->email = $email;
+    }
+
+    // getters
+    public function getEmail(){
+        return $this->email;
+    }
+      
+    // setters
+    public function setEmail($email){
+        if(strpos($email, '@') > -1){
+            $this->email = $email;
+        };
+    }
 }
- 
-// Create a new object
-$obj = new MyClass;
- 
-// Get the value of $prop1
-echo $obj->getProperty();
- 
-// Output a message at the end of the file
-echo "End of file.<br />";
+
+$userOne = new User('mario', 'mario@my.cat');
+$userTwo = new User('luigi', 'luigi@my.cat');
+
+echo $userOne->name . "\n";
+echo $userOne->email . "\n";
+  
+echo $userTwo->name . "\n";
+echo $userTwo->email . "\n";
+
+echo $userOne->getEmail() . "\n";
+echo $userTwo->getEmail() . "\n";
+  
+$userTwo->setEmail('yoshi@my.cat');
+  
+echo $userTwo->getEmail() . "\n";

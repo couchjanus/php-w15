@@ -3,26 +3,32 @@
 /**
  * class.04.test
  */ 
-class MyClass
-{
+
+class User {
+  
   // Class properties and methods go here
-  public $prop1 = "I'm a class property!";
-  public $prop2 = "I'm a public property!";
-  protected $prop3 = "I'm a protected property!";
-  private $_prop4 = "I'm a private property!";
+  public $username = 'John Doo';
+  public $email = 'doo@my.cat';
+
+  protected $sex = "male"; // I'm a protected property
+  private $_age = 22; // I'm a private property
+
+  public function addFriend(){
+    //return "added a new friend";
+    return "$this->username just added a new friend";
+  }
+
+  public function setSex($newSex)
+  {
+    $this->sex = $newSex;
+  }
+  public function getSex()
+  {
+    return $this->sex;
+  }
 }
 
-$instance = new MyClass();
+$userOne = new User();
+$userTwo = new User();
 
-echo $instance->prop1; // Output the property
-var_dump($instance->prop1);
-
-echo $instance->prop2; // Output the property
-echo $instance->prop3; // Output the property
-echo $instance->_prop4; // Output the property
-
-// выражение $instance->$prop1 будет пытаться найти значение, присвоенное переменной по имени $prop1, а затем обратиться к свойству $instance–>значение
-echo $instance->$prop1;
-
-
-// var_dump($instance);
+echo $userOne->addFriend();

@@ -5,20 +5,20 @@
 
 class User 
 {
-    private $name;
-    public $login;
+    private $username;
+    public $name;
     public $email;
 
     static public $status = 0;
 
-    public function setName($name)
+    public function setName($first_name, $last_name)
     {
-        $this->name = $name;
+        $this->username = $first_name.' '.$last_name;
     }
    
     public function getName()
     {
-        return $this->name;
+        return $this->username;
     }
 }
    
@@ -31,9 +31,8 @@ $newUser = new User();
 var_dump($newUser);
 
 // укажем значения для свойств $newUser.
-
-$newUser->setName("Ben");
-$newUser->login = "ben";
+$newUser->setName("Ben", "Uslama");
+$newUser->name = "ben";
 $newUser->email = "beny@mail.cat"; 
 
 var_dump($newUser);
@@ -41,7 +40,7 @@ var_dump($newUser);
 // определив значения свойств, мы можем их считать при необходимости, или же присвоить новые — то есть работать как с обычными переменными.
 
 echo $newUser->getName();
-$newUser->setName("Tom");
+$newUser->setName("Tom", "Cat");
 
 echo $newUser->email;
 echo $newUser->email = "tomcat@mail.cat";
@@ -50,7 +49,7 @@ echo $newUser->email = "tomcat@mail.cat";
 
 $secondUser = new User();
 
-$secondUser->setName("John");
+$secondUser->setName("John", "Doo");
 $secondUser->login = "john";
 $secondUser->login = "john@mail.cat";
 
@@ -60,13 +59,12 @@ echo $secondUser->getName();
 echo $newUser->getName();
  
 // Set new values for both objects
-$secondUser->setName("John Cat");
-$newUser->setName("Tomt Cat");
+$secondUser->setName("John", "Cat");
+$newUser->setName("Tomt", "Cat");
  
 // Output both objects $name value
 echo $secondUser->getName();
 echo $newUser->getName();
-
 
 $newUser->address = "Киев";
 var_dump($newUser);
