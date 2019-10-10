@@ -7,10 +7,13 @@
         <div class="card-body">
             <form action="" method="POST">
                 <div class="form-group">
-                    <label for="username">Name</label>
+                    <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" aria-describedby="categoryHelp" placeholder="Enter Category Name" required>
                 </div>
-                
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <input type="checkbox" class="form-control" id="status" name="status" checked>
+                </div>
                 <div class="mx-auto">
                     <button type="submit" class="btn btn-primary text-right">Save</button>
                 </div>

@@ -9,3 +9,14 @@ class DashboardController
 		  view('admin/index', ['title'=>$title], 'admin');
     }
 }
+
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $title = 'Admin Dashboard';
+        $this->view->render('admin/index', compact('title'), 'admin');
+    }
+}
+

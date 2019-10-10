@@ -1,17 +1,40 @@
 <?php
-// HomeController.php
+/**
+ * HomeController.php
+ */
 
-class HomeController
+// class HomeController
+// {
+//     public function index()
+//     {
+//         $title = 'Our Best Cats Members Home Page';
+//         $this->view('home/index', compact('title'));
+//     }
+
+//     public function view($path, $data = null, $layout='app') 
+//     {
+//         if ( $data ) {
+//             extract($data);
+//         }
+//         $path .= '.php';
+//         return require VIEWS."/layouts/${layout}.php";
+//     }
+// }
+
+class HomeController extends View
 {
-    // Class properties and methods go here   
-    public function __construct()
+    public function index()
     {
-		  view('home/index', ['title'=>'<b>Our Cats</b> Members Home Page']);
+        $title = 'Our Best Cats Members Home Page';
+        $this->render('home/index', compact('title'));
     }
-
-    // public function index()
-    // {
-    //   $title = 'Our <b>Best Cat Members Home Page </b>';
-		//   view('home/index', ['title'=>$title]);
-    // }
 }
+
+// class HomeController extends Controller
+// {
+//     public function index()
+//     {
+//         $title = 'Our Best Cats Members Home Page';
+//         $this->view->render('home/index', compact('title'));
+//     }
+// }
