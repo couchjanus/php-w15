@@ -3,40 +3,10 @@
  * class Connection
  */
 
-// class Connection extends PDO
-// {
-//     protected static $instance;
-
-//     public function __construct($dsn, $dbname, $dbpass, $errmode) {
-//         parent::__construct($dsn, $dbname, $dbpass);
-//         $this->setAttribute(PDO::ATTR_ERRMODE, $errmode);
-//     }
-    
-//     /**
-//      * Get instance of the PDO
-//      * @return PDO
-//      */
-//     public static function connect(array $config)
-//     {
-//         $dsn = self::makeDsn($config['db']);
-//         self::$instance = new Connection($dsn, $config['user'], $config['password'], $config['errmode']);
-//         return self::$instance;
-//     }
-    
-//     private static function makeDsn($config)
-//     {
-//         $dsn = $config['driver'] . ':';
-//         unset($config['driver']);
-//         foreach ($config as $key => $value) {
-//                 $dsn .= $key . '=' . $value . ';';
-//         }
-//         return substr($dsn, 0, -1);
-//     }
-// }
-
 class Connection extends PDO
 {
     protected static $instance;
+    protected static $config = [];
 
     protected function __construct($dsn, $dbname, $dbpass, $errmode) {
         parent::__construct($dsn, $dbname, $dbpass);
@@ -57,10 +27,12 @@ class Connection extends PDO
      * Get instance of the PDO
      * @return PDO
      */
-    public static function connect(array $config){
+    public static function connect()
+    {
+        self::$config = require_once DB_CONFIG_FILE;
         if(!self::$instance){
-            $dsn = self::makeDsn($config['db']);
-            self::$instance = new Connection($dsn, $config['user'], $config['password'], $config['errmode']);
+            $dsn = self::makeDsn(self::$config['db']);
+            self::$instance = new Connection($dsn, self::$config['user'], self::$config['password'], self::$config['errmode']);
         }
         return self::$instance;
     }

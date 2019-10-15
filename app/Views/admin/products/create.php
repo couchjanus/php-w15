@@ -19,8 +19,8 @@
                     <select class="form-control" id="category" name="category_id">
                             <?php if (is_array($categories)) : ?>
                             <?php foreach ($categories as $category): ?>
-                            <option value="<?php echo $category->id(); ?>">
-                                <?php echo $category->name(); ?>
+                            <option value="<?php echo $category->id; ?>">
+                                <?php echo $category->name; ?>
                             </option>
                             <?php endforeach; ?>
                             <?php endif; ?>

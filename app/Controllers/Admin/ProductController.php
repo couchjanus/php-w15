@@ -12,7 +12,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        $title = 'Product List Page';
+        $title = 'Products List Page';
         $this->view->render('admin/products/index', compact('title', 'products'), 'admin');
     }
 
@@ -23,20 +23,20 @@ class ProductController extends Controller
     */
     public function create()
     {
-        //Принимаем данные из формы
         if (isset($_POST) and !empty($_POST)) {
             $product = new Product();
-            $product->setName(trim(strip_tags($_POST['name'])));
-            $product->setStatus((int)isset($_POST['status']));
-            $product->setPrice(trim(strip_tags($_POST['price'])));
-            $product->setBrand(trim(strip_tags($_POST['brand'])));
-            $product->setCategory_id($_POST['category_id']);
-            $product->setDescription(trim(strip_tags($_POST['description'])));
-            $product->setIs_new((int)isset($_POST['is_new']));
+            $product->name = trim(strip_tags($_POST['name']));
+            $product->slug = Slug::makeSlug($product->name, array('transliterate' => true));
+            $product->status = (int)isset($_POST['status']);
+            $product->price = trim(strip_tags($_POST['price']));
+            $product->brand = trim(strip_tags($_POST['brand']));
+            $product->category_id = $_POST['category_id'];
+            $product->description = trim(strip_tags($_POST['description']));
+            $product->is_new = (int)isset($_POST['is_new']);
             $product->store();
             Helper::redirect('/admin/products');
         }
-        $title = 'Admin Product Add New Product ';
+        $title = 'Add New Product ';
         $categories = Category::all();
         $this->view->render('admin/products/create', compact('title', 'categories'), 'admin');
     }

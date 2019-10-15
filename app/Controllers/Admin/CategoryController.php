@@ -1,95 +1,5 @@
 <?php
-
-// CategoryController.php
-
-// class CategoryController extends Controller
-// {
-//     /**
-//      * Главная страница управления категориями
-//      *
-//      * @return bool
-//      */
-//     public function index()
-//     {
-//         $connection = Connection::connect(require_once DB_CONFIG_FILE);
-//         $stmt = $connection->query("SELECT * FROM categories ORDER BY id ASC");
-//         $categories = $stmt->fetchAll();
-//         $title = 'Category List Page ';
-//         $this->view->render('admin/categories/index', compact('title', 'categories'), 'admin');
-//     }
-//     /**
-//      * Добавление категории
-//      *
-//      * @return bool
-//      */
-//     public function create()
-//     {
-//         if (isset($_POST) and !empty($_POST)) {
-//             $connection = Connection::connect(require_once DB_CONFIG_FILE);
-//             $stmt = $connection->prepare("INSERT INTO categories (name, status) VALUES (?, ?)");
-//             $sql = "INSERT INTO categories (name, status) VALUES (?, ?)";
-//             $status = (int)isset($_POST['status']);
-//             $stmt->bindParam(1, $_POST['name']);
-//             $stmt->bindParam(2, $status);
-//             $stmt->execute();
-//             Helper::redirect('/admin/categories');
-//         }
-//         $title = 'Admin Category Add New Category ';
-//         $this->view->render('admin/categories/create', compact('title'), 'admin');
-//     }
-// }
-
 require_once MODELS.'/Category.php';
-
-// class CategoryController extends Controller
-// {
-//     /**
-//      * Главная страница управления категориями
-//      *
-//      * @return bool
-//      */
-//     public function index()
-//     {
-//         // Create an instance
-//         $categories = new Category();
-//         // Get the list of Categories
-//         $categories = $categories->index();
-//         $title = 'Category List Page ';
-//         $this->view->render('admin/categories/index', compact('title', 'categories'), 'admin');
-//     }
-//     /**
-//      * Добавление категории
-//      *
-//      * @return bool
-//      */
-//     // public function create()
-//     // {
-//     //     if (isset($_POST) and !empty($_POST)) {
-//     //         $opts = [];
-//     //         array_push($opts, trim(strip_tags($_POST['name'])));
-//     //         $status = (int)isset($_POST['status']);
-//     //         array_push($opts, $status);
-//     //         $category = new Category();
-//     //         $category->store($opts);
-//     //         Helper::redirect('/admin/categories');
-//     //     }
-//     //     $title = 'Admin Category Add New Category ';
-//     //     $this->view->render('admin/categories/create', compact('title'), 'admin');
-//     // }
-
-//     public function create()
-//     {
-//         if (isset($_POST) and !empty($_POST)) {
-//             $opts[] = trim(strip_tags($_POST['name']));
-//             $opts[] = (int)isset($_POST['status']);
-//             $category = new Category();
-//             $category->store($opts);
-//             Helper::redirect('/admin/categories');
-//         }
-//         $title = 'Admin Category Add New Category ';
-//         $this->view->render('admin/categories/create', compact('title'), 'admin');
-//     }
-// }
 
 class CategoryController extends Controller
 {
@@ -104,13 +14,12 @@ class CategoryController extends Controller
      *
      * @return bool
      */
- 
     public function create()
     {
         if (isset($_POST) and !empty($_POST)) {
             $category = new Category();
-            $category->setName(trim(strip_tags($_POST['name'])));
-            $category->setStatus((int)isset($_POST['status']));
+            $category->name = trim(strip_tags($_POST['name']));
+            $category->status = (int)isset($_POST['status']);
             $category->store();
             Helper::redirect('/admin/categories');
         }
@@ -127,5 +36,43 @@ class CategoryController extends Controller
         $categories = Category::all(array('status'=>1));
         $title = 'Active Category List Page ';
         $this->view->render('admin/categories/index', compact('title', 'categories'), 'admin');
+    }
+
+    public function show($vars)
+    {
+        extract($vars);
+        $category = Category::getByPrimaryKey($id);
+        var_dump($category);
+        // $title = 'Category Page ';
+        // $this->view->render('admin/categories/show', compact('title', 'category'), 'admin');
+    }
+
+    public function edit($vars)
+    {
+        extract($vars);
+        $category = Category::getByPrimaryKey($id);
+
+        if (isset($_POST) and !empty($_POST)) {
+            $category->name = trim(strip_tags($_POST['name']));
+            $category->status = (int)isset($_POST['status']);
+            $category->store();
+            Helper::redirect('/admin/categories');
+        }
+        $title = 'Edit Category Page ';
+        $this->view->render('admin/categories/edit', compact('title', 'category'), 'admin');
+    }
+
+    public function delete($vars)
+    {
+        extract($vars);
+        $category = Category::getByPrimaryKey($id);
+        if (isset($_POST['submit'])) {
+            $category->destroy();
+            Helper::redirect('/admin/categories');
+        } elseif (isset($_POST['reset'])) {
+            Helper::redirect('/admin/categories');            
+        }
+        $title = 'Delete Category ';
+        $this->view->render('admin/categories/delete', compact('title', 'category'), 'admin');
     }
 }
