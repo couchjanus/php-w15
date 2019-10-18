@@ -164,22 +164,6 @@ class AuthController extends Controller
 		Helper::redirect('/');
     }
 
-    // public static function checkUser($email, $password)
-    // {
-    //         $sql = "SELECT *
-    //                 FROM users
-    //                 WHERE email = :email
-    //                 ";
-    //         $stmt = self::prepare($sql);
-    //         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    //         $stmt->execute();
-
-    //         $user = $stmt->fetch();
-    //         if (password_verify($password, $user['password'])) {
-    //             return $user['id'];
-    //         }
-    //         return false;
-    // }
     
     public function loggedCheck()
     {
