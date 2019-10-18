@@ -30,6 +30,20 @@ abstract class Model
     public function __set($key, $value) { 
         return $this->columns[$key] = $value;
     }
+
+    // public function getColumnValue($column){
+    //     return $this->columns[$column];
+    // }
+    // function setColumnValue($column, $value){
+    //     $this->columns[$column] = $value;
+    // }
+    // public function __set($property, $value)
+    // {
+    //     if (property_exists($this, $property)) {
+    //         $this->$property = $value;
+    //     }
+    // }
+
     
     /**
      * Get all items
