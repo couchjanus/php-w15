@@ -8,4 +8,12 @@ class Helper
         header('Location: http://'.$_SERVER['HTTP_HOST'].$redirect_url);
         exit();
     }
+    
+    public static function isGuest()
+    {
+        if (isset($_COOKIE['Logged'])) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -19,3 +19,5 @@
     define('DB_CONFIG_FILE', CONFIG.'/db.php');
 
     define('ROUTES', require CONFIG.'/routes'.EXT);
+
+    const SESSION_PREFIX = 'shop_';

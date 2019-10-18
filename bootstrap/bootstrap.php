@@ -47,11 +47,11 @@ require_once dirname(__DIR__).'/config/app.php';
 require_once CORE.'/View.php';
 require_once CORE.'/Controller.php';
 require_once CORE.'/Helper.php';
-
+require_once CORE.'/Session.php';
 require_once CORE.'/Connection.php';
 require_once CORE.'/Model.php';
 require_once CORE.'/Slug.php';
 require_once CORE.'/Router.php';
-
+Session::init();
 $router = new Router();
 $router->direct(getURI());

@@ -173,5 +173,14 @@ abstract class Model
          $stmt->execute($condition);
          $countArr = $stmt->fetch();
          return $countArr[0];
-     }
+    }
+
+    public static function lastId() 
+    {
+        $query = "SELECT id FROM " . static::$table . " ORDER BY id DESC LIMIT 1";
+        $db = Connection::connect();
+        $stmt = $db->getPreparedStatment($query);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+    }
 }
