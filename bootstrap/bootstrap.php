@@ -13,15 +13,6 @@ function dd($mix)
     echo '<pre>'.print_r($mix, true).'</pre>';
 }
 
-// function view($path, $data = null) 
-// {
-// 	if ( $data ) {
-// 		extract($data);
-// 	}
-// 	$path .= EXT;
-// 	include VIEWS."/layouts/app.php";	
-// }
-
 function view($path, $data = null, $layout='app') 
 {
 	if ( $data ) {
@@ -40,6 +31,15 @@ function conf($mix)
 {
 	return include(CONFIG."/".$mix.".php"); 
 }
+
+// spl_autoload_register(function($class) {
+//     $file = ROOT.'/'.str_replace('\\', '/', $class).'.php';
+//     // $file = CORE.$class.EXT;
+//     // dd($file);
+//     if(is_file($file)) {
+//         require_once $file;
+//     }
+// });
 // ============================================
 
 require_once dirname(__DIR__).'/config/app.php';
@@ -52,6 +52,11 @@ require_once CORE.'/Connection.php';
 require_once CORE.'/Model.php';
 require_once CORE.'/Slug.php';
 require_once CORE.'/Router.php';
+
 Session::init();
 $router = new Router();
 $router->direct(getURI());
+
+// $app = new App();
+// $app->init();
+

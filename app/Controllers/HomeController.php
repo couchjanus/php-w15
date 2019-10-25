@@ -3,38 +3,34 @@
  * HomeController.php
  */
 
-// class HomeController
-// {
-//     public function index()
-//     {
-//         $title = 'Our Best Cats Members Home Page';
-//         $this->view('home/index', compact('title'));
-//     }
+require_once MODELS.'/Product.php';
 
-//     public function view($path, $data = null, $layout='app') 
-//     {
-//         if ( $data ) {
-//             extract($data);
-//         }
-//         $path .= '.php';
-//         return require VIEWS."/layouts/${layout}.php";
-//     }
-// }
-
-class HomeController extends View
+class HomeController extends Controller
 {
     public function index()
     {
         $title = 'Our Best Cats Members Home Page';
-        $this->render('home/index', compact('title'));
+        $this->view->render('home/index', compact('title'));
+    }
+
+
+    public function getProducts($vars)
+    {
+        $products = Product::getProducts();
+        echo json_encode($products);
+    }
+
+    public function getProduct($vars)
+    {
+        extract($vars);
+        $product = Product::getBySlug($id);
+        echo json_encode($product);
+    }
+
+    public function getProductItem($vars)
+    {
+        extract($vars);
+        $product = Product::getProductBySlug($id);
+        echo json_encode($product);
     }
 }
-
-// class HomeController extends Controller
-// {
-//     public function index()
-//     {
-//         $title = 'Our Best Cats Members Home Page';
-//         $this->view->render('home/index', compact('title'));
-//     }
-// }
